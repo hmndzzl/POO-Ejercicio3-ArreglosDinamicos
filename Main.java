@@ -23,6 +23,10 @@ public class Main {
         // Formato para las fechas (String)
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+        // Leer los csv
+        ArrayList<String[]> libros_csv = leerCsv(urlLibrosCSV);
+        ArrayList<String[]> miembros_csv = leerCsv(urlMiembrosCSV);
+
         while (!salir) {
             System.out.println("---- Sistema de Biblioteca ----");
             System.out.println("1. Agregar Sucursal");
@@ -230,10 +234,10 @@ public class Main {
     }
 
     // Función para buscar un libro en el ArrayList de la base de datos del csv
-    private static String[] csvbuscarPorIsbn(ArrayList<String[]> filas, String isbn) {
+    private static String csvbuscarPorIsbn(ArrayList<String[]> filas, String isbn) {
         for (String[] fila : filas) {
             if (fila.length > 0 && fila[0].equals(isbn)) {
-                return fila;
+                return fila[0];
             }
         }
         return null;
