@@ -24,6 +24,7 @@ public class Miembro {
 		if (!libros.contains(libro)) {
 			libros.add(libro);  // Añade el libro a la lista de libros prestados
 			this.fechaP = fechaP;  // Guarda la fecha de préstamo
+			libro.incrementarPrestados(); 
 			return true;  // Retorna true si el préstamo fue exitoso
 		}
 		return false;  // Retorna false si el libro ya estaba prestado
