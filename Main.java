@@ -2,16 +2,22 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
+
         // Crear una lista de sucursales (bibliotecas)
         List<Biblioteca> sucursales = new ArrayList<>();
         boolean salir = false; // Variable para controlar el ciclo
-        int nLibrosP = 0; //Variable para llevar control de libros prestados
-        
+        int nLibrosP = 0; // Variable para llevar control de libros prestados
+        // Archivos CSV en el directorio
+        String librosCSV = "libros.csv";
+        String miembrosCSV = "miembros.csv";
+
         while (!salir) {
             System.out.println("---- Sistema de Biblioteca ----");
             System.out.println("1. Agregar Sucursal");
@@ -24,9 +30,9 @@ public class Main {
             System.out.print("Seleccione una opción: ");
             int opcion = scanner.nextInt();
             scanner.nextLine();
-            
+
             switch (opcion) {
-                case 1: 
+                case 1:
                     // Agregar una nueva sucursal
                     System.out.print("Ingrese el nombre de la nueva sucursal: ");
                     String nombreSucursal = scanner.nextLine();
@@ -40,24 +46,24 @@ public class Main {
                         System.out.println("No hay sucursales registradas. Agregue una primero.");
                         break;
                     }
-                    
-                    System.out.print("Ingrese el ISBN: ");
+
+                    System.out.print("Ingrese el ISBN (formato 978XXXXXXXXXX): ");
                     int isbn = scanner.nextInt();
                     scanner.nextLine();
-                    
+
                     System.out.print("Ingrese el título: ");
                     String titulo = scanner.nextLine();
-                    
+
                     System.out.print("Ingrese el autor: ");
                     String autor = scanner.nextLine();
-                    
+
                     System.out.print("Ingrese el año de publicación: ");
                     int anio = scanner.nextInt();
                     scanner.nextLine();
-                    
+
                     System.out.print("Ingrese el género: ");
                     String genero = scanner.nextLine();
-                    
+
                     Libro nuevoLibro = new Libro(isbn, titulo, autor, anio, genero);
                     sucursales.get(0).getLibros().add(nuevoLibro);
                     System.out.println("Libro agregado con éxito.");
@@ -69,15 +75,15 @@ public class Main {
                         System.out.println("No hay sucursales registradas. Agregue una primero.");
                         break;
                     }
-                    
-                    System.out.print("Ingrese el ID del miembro: ");
+
+                    System.out.print("Ingrese el ID del miembro (4 dígitos): ");
                     int idMiembro = scanner.nextInt();
                     scanner.nextLine();
-                    
+
                     System.out.print("Ingrese el nombre del miembro: ");
                     String nombreMiembro = scanner.nextLine();
                     ArrayList<Libro> librosM = new ArrayList<>();
-                    
+
                     Miembro nuevoMiembro = new Miembro(idMiembro, nombreMiembro, librosM, null);
                     sucursales.get(0).getMiembros().add(nuevoMiembro);
                     System.out.println("Miembro registrado con éxito.");
@@ -85,17 +91,17 @@ public class Main {
 
                 case 4:
                     // Prestar un libro
-                    System.out.println("Ingrese el ID del miembro: ");
+                    System.out.println("Ingrese el ID del miembro (4 dígitos): ");
                     idMiembro = scanner.nextInt();
                     scanner.nextLine();
                     System.out.println("Ingrese el ISBN del libro: ");
                     isbn = scanner.nextInt();
                     scanner.nextLine();
-                    LocalDateTime fechaPrestamo = LocalDateTime.now();  // Registrar fecha de préstamo
+                    LocalDateTime fechaPrestamo = LocalDateTime.now(); // Registrar fecha de préstamo
 
                     Miembro miembro = buscarMiembroPorID(sucursales.get(0).getMiembros(), idMiembro);
                     Libro libro = buscarLibroPorISBN(sucursales.get(0).getLibros(), isbn);
-                    
+
                     if (miembro != null && libro != null) {
                         boolean prestamoExitoso = miembro.prestarLibro(libro, fechaPrestamo);
                         if (prestamoExitoso) {
@@ -117,11 +123,11 @@ public class Main {
                     System.out.println("Ingrese el ISBN del libro: ");
                     isbn = scanner.nextInt();
                     scanner.nextLine();
-                    LocalDateTime fechaDevolucion = LocalDateTime.now();  // Registrar fecha de devolución
+                    LocalDateTime fechaDevolucion = LocalDateTime.now(); // Registrar fecha de devolución
 
                     miembro = buscarMiembroPorID(sucursales.get(0).getMiembros(), idMiembro);
                     libro = buscarLibroPorISBN(sucursales.get(0).getLibros(), isbn);
-                    
+
                     if (miembro != null && libro != null) {
                         boolean devolucionExitosa = miembro.devolverLibro(libro, fechaDevolucion);
                         if (devolucionExitosa) {
@@ -160,6 +166,25 @@ public class Main {
             }
         }
         return null;
+    }
+
+    private static ArrayList<String[]> leerCsv(String urlCSV) {
+        String fila_completa;
+        String[] fila;
+        ArrayList<String[]> filas = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            while ((fila_completa = br.readLine()) != null) {
+                // Usa el delimitador para dividir cada línea en columnas
+                fila = fila_completa.split(",");
+
+                filas.add(fila);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return filas;
     }
 
     private static Libro buscarLibroPorISBN(ArrayList<Libro> libros, int isbn) {
