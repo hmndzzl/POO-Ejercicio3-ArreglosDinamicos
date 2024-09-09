@@ -15,8 +15,8 @@ public class Main {
         boolean salir = false; // Variable para controlar el ciclo
         int nLibrosP = 0; // Variable para llevar control de libros prestados
         // Archivos CSV en el directorio
-        String librosCSV = "libros.csv";
-        String miembrosCSV = "miembros.csv";
+        String urlLibrosCSV = "libros.csv";
+        String urlMiembrosCSV = "miembros.csv";
 
         while (!salir) {
             System.out.println("---- Sistema de Biblioteca ----");
@@ -190,6 +190,16 @@ public class Main {
         }
 
         return filas;
+    }
+
+    // Función para buscar un libro en el ArrayList de la base de datos del csv
+    private static String[] csvbuscarPorIsbn(ArrayList<String[]> filas, String isbn) {
+        for (String[] fila : filas) {
+            if (fila.length > 0 && fila[0].equals(isbnBuscado)) {
+                return fila;
+            }
+        }
+        return null;
     }
 
     private static Libro buscarLibroPorISBN(ArrayList<Libro> libros, int isbn) {
