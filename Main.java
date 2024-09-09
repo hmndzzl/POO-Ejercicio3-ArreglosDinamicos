@@ -18,12 +18,12 @@ public class Main {
             System.out.println("2. Agregar Libro a una Sucursal");
             System.out.println("3. Registrar Miembro en una Sucursal");
             System.out.println("4. Prestar Libro");
-            System.out.println("5. Devolver Libro");
+            System.out.println("5. Devolver Lgit ibro");
             System.out.println("6. Análisis de Estadísticas");
             System.out.println("7. Salir");
             System.out.print("Seleccione una opción: ");
             int opcion = scanner.nextInt();
-            scanner.nextLine();  // Limpiar buffer
+            scanner.nextLine();
             
             switch (opcion) {
                 case 1: 
