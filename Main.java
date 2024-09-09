@@ -10,6 +10,7 @@ public class Main {
         // Crear una lista de sucursales (bibliotecas)
         List<Biblioteca> sucursales = new ArrayList<>();
         boolean salir = false; // Variable para controlar el ciclo
+        int nLibrosP = 0; //Variable para llevar control de libros prestados
         
         while (!salir) {
             System.out.println("---- Sistema de Biblioteca ----");
@@ -75,8 +76,9 @@ public class Main {
                     
                     System.out.print("Ingrese el nombre del miembro: ");
                     String nombreMiembro = scanner.nextLine();
+                    ArrayList<Libro> librosM = new ArrayList<>();
                     
-                    Miembro nuevoMiembro = new Miembro(idMiembro, nombreMiembro, null, null);
+                    Miembro nuevoMiembro = new Miembro(idMiembro, nombreMiembro, librosM, null);
                     sucursales.get(0).getMiembros().add(nuevoMiembro);
                     System.out.println("Miembro registrado con éxito.");
                     break;
@@ -98,6 +100,7 @@ public class Main {
                         boolean prestamoExitoso = miembro.prestarLibro(libro, fechaPrestamo);
                         if (prestamoExitoso) {
                             System.out.println("Préstamo exitoso.");
+                            nLibrosP++;
                         } else {
                             System.out.println("El libro ya está prestado.");
                         }
@@ -133,11 +136,7 @@ public class Main {
 
                 case 6:
                     // Análisis de estadísticas
-                    int librosPrestados = 0;
-                    for (Miembro m : sucursales.get(0).getMiembros()) {
-                        librosPrestados += m.getLibros().size();
-                    }
-                    System.out.println("Total de libros prestados: " + librosPrestados);
+                    System.out.println("Total de libros prestados: " + nLibrosP);
                     break;
 
                 case 7:
