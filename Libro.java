@@ -1,27 +1,27 @@
 public class Libro {
-    private int isbn;
-    private String Titulo;
-    private String autor;
-    private int anio; 
-    private String genero;
+	private String isbn;
+	private String Titulo;
+	private String autor;
+	private int anio;
+	private String genero;
 	private int nPrestados;
 
-    public Libro(int isbn, String titulo, String autor, int anio, String genero){
-        this.isbn = isbn;
-        this.Titulo = titulo;
+	public Libro(String isbn, String titulo, String autor, int anio, String genero) {
+		this.isbn = isbn;
+		this.Titulo = titulo;
 		this.autor = autor;
-		this.anio = anio;  // Por defecto, el año de publicación es 0
-        this.genero = genero;
+		this.anio = anio; // Por defecto, el año de publicación es 0
+		this.genero = genero;
 		this.nPrestados = 0; // se inicializa el contador
-    }
+	}
 
-    //Setter & Getters
+	// Setter & Getters
 
-    public int getIsbn() {
+	public String getIsbn() {
 		return this.isbn;
 	}
 
-	public void setIsbn(int isbn) {
+	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
 
@@ -58,13 +58,13 @@ public class Libro {
 	}
 
 	// Método para incrementar el contador de préstamos
-    public void incrementarPrestados() {
-        this.nPrestados++;
-    }
+	public void incrementarPrestados() {
+		this.nPrestados++;
+	}
 
 	// obtener el número de veces que ha sido prestado
-    public int getNPrestados() {
-        return this.nPrestados;
-    }
+	public int getNPrestados() {
+		return this.nPrestados;
+	}
 
 }

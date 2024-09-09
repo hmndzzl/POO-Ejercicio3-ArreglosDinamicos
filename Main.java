@@ -3,7 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
@@ -24,7 +26,7 @@ public class Main {
             System.out.println("2. Agregar Libro a una Sucursal");
             System.out.println("3. Registrar Miembro en una Sucursal");
             System.out.println("4. Prestar Libro");
-            System.out.println("5. Devolver Lgit ibro");
+            System.out.println("5. Devolver un Libro");
             System.out.println("6. Análisis de Estadísticas");
             System.out.println("7. Salir");
             System.out.print("Seleccione una opción: ");
@@ -48,8 +50,7 @@ public class Main {
                     }
 
                     System.out.print("Ingrese el ISBN (formato 978XXXXXXXXXX): ");
-                    int isbn = scanner.nextInt();
-                    scanner.nextLine();
+                    String isbn = scanner.nextLine();
 
                     System.out.print("Ingrese el título: ");
                     String titulo = scanner.nextLine();
@@ -65,6 +66,12 @@ public class Main {
                     String genero = scanner.nextLine();
 
                     Libro nuevoLibro = new Libro(isbn, titulo, autor, anio, genero);
+
+                    // Array de Strings para escribir el csv
+                    String[] filaLibro = { isbn, titulo, autor, String.valueOf(anio), genero, "0" };
+
+                    escribirCsv(urlLibrosCSV, filaLibro);
+
                     sucursales.get(0).getLibros().add(nuevoLibro);
                     System.out.println("Libro agregado con éxito.");
                     break;
@@ -95,8 +102,8 @@ public class Main {
                     idMiembro = scanner.nextInt();
                     scanner.nextLine();
                     System.out.println("Ingrese el ISBN del libro: ");
-                    isbn = scanner.nextInt();
-                    scanner.nextLine();
+                    isbn = scanner.nextLine();
+                    // scanner.nextLine();
                     LocalDateTime fechaPrestamo = LocalDateTime.now(); // Registrar fecha de préstamo
 
                     Miembro miembro = buscarMiembroPorID(sucursales.get(0).getMiembros(), idMiembro);
@@ -121,8 +128,8 @@ public class Main {
                     idMiembro = scanner.nextInt();
                     scanner.nextLine();
                     System.out.println("Ingrese el ISBN del libro: ");
-                    isbn = scanner.nextInt();
-                    scanner.nextLine();
+                    isbn = scanner.nextLine();
+                    // scanner.nextLine();
                     LocalDateTime fechaDevolucion = LocalDateTime.now(); // Registrar fecha de devolución
 
                     miembro = buscarMiembroPorID(sucursales.get(0).getMiembros(), idMiembro);
@@ -192,6 +199,17 @@ public class Main {
         return filas;
     }
 
+    private static void escribirCsv(String urlCSV, String[] fila) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(urlCSV, true))) {
+            // Escribe los datos de la fila como un mismo String seaparado por comas
+            writer.write(String.join(",", fila));
+            writer.newLine();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Función para buscar un libro en el ArrayList de la base de datos del csv
     private static String[] csvbuscarPorIsbn(ArrayList<String[]> filas, String isbn) {
         for (String[] fila : filas) {
@@ -202,9 +220,9 @@ public class Main {
         return null;
     }
 
-    private static Libro buscarLibroPorISBN(ArrayList<Libro> libros, int isbn) {
+    private static Libro buscarLibroPorISBN(ArrayList<Libro> libros, String isbn) {
         for (Libro l : libros) {
-            if (l.getIsbn() == isbn) {
+            if (l.getIsbn().equals(isbn)) {
                 return l;
             }
         }
