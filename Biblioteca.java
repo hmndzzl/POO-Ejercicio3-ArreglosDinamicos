@@ -11,8 +11,8 @@ public class Biblioteca {
         this.miembros = miembros;
     }
 	public Biblioteca() {
-        this.libros = null;
-        this.miembros = null;
+        this.libros = new ArrayList<>();
+        this.miembros = new ArrayList<>();
     }
 
     //Setters & getters
