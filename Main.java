@@ -195,7 +195,7 @@ public class Main {
     // Función para buscar un libro en el ArrayList de la base de datos del csv
     private static String[] csvbuscarPorIsbn(ArrayList<String[]> filas, String isbn) {
         for (String[] fila : filas) {
-            if (fila.length > 0 && fila[0].equals(isbnBuscado)) {
+            if (fila.length > 0 && fila[0].equals(isbn)) {
                 return fila;
             }
         }
