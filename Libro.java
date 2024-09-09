@@ -4,6 +4,7 @@ public class Libro {
     private String autor;
     private int anio; 
     private String genero;
+	private int nPrestados;
 
     public Libro(int isbn, String titulo, String autor, int anio, String genero){
         this.isbn = isbn;
@@ -11,6 +12,7 @@ public class Libro {
 		this.autor = autor;
 		this.anio = anio;  // Por defecto, el año de publicación es 0
         this.genero = genero;
+		this.nPrestados = 0; // se inicializa el contador
     }
 
     //Setter & Getters
@@ -54,5 +56,15 @@ public class Libro {
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
-}
 
+	// Método para incrementar el contador de préstamos
+    public void incrementarPrestados() {
+        this.nPrestados++;
+    }
+
+	// obtener el número de veces que ha sido prestado
+    public int getNPrestados() {
+        return this.nPrestados;
+    }
+
+}
