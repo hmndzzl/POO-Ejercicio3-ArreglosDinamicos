@@ -143,12 +143,12 @@ public class Main {
                 case 6:
                     // Análisis de estadísticas
                     System.out.println("Total de libros prestados: " + nLibrosP);
-                
+
                     for (Libro libroEstadisticas : sucursales.get(0).getLibros()) {
-                        System.out.println("El libro '" + libroEstadisticas.getTitulo() + "' ha sido prestado " + libroEstadisticas.getNPrestados() + " veces.");
+                        System.out.println("El libro '" + libroEstadisticas.getTitulo() + "' ha sido prestado "
+                                + libroEstadisticas.getNPrestados() + " veces.");
                     }
                     break;
-                
 
                 case 7:
                     // Salir del ciclo
@@ -178,7 +178,7 @@ public class Main {
         String[] fila;
         ArrayList<String[]> filas = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(urlCSV))) {
             while ((fila_completa = br.readLine()) != null) {
                 // Usa el delimitador para dividir cada línea en columnas
                 fila = fila_completa.split(",");
