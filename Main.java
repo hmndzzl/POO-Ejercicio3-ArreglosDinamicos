@@ -21,7 +21,7 @@ public class Main {
         String urlLibrosCSV = "libros.csv";
         String urlMiembrosCSV = "miembros.csv";
         // Formato para las fechas (String)
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddTHH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         while (!salir) {
             System.out.println("---- Sistema de Biblioteca ----");
