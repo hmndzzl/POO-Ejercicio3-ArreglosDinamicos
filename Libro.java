@@ -5,11 +5,12 @@ public class Libro {
     private int anio; 
     private String genero;
 
-    public Libro(int isbn, String titulo, String genero){
+    public Libro(int isbn, String titulo, String autor, int anio, String genero){
         this.isbn = isbn;
         this.Titulo = titulo;
+		this.autor = autor;
+		this.anio = anio;  // Por defecto, el año de publicación es 0
         this.genero = genero;
-        this.anio = 0; // Por defecto, el año de publicación es 0
     }
 
     //Setter & Getters
