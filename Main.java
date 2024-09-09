@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,6 +20,8 @@ public class Main {
         // Archivos CSV en el directorio
         String urlLibrosCSV = "libros.csv";
         String urlMiembrosCSV = "miembros.csv";
+        // Formato para las fechas (String)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddTHH:mm:ss");
 
         while (!salir) {
             System.out.println("---- Sistema de Biblioteca ----");
@@ -98,12 +101,11 @@ public class Main {
 
                 case 4:
                     // Prestar un libro
-                    System.out.println("Ingrese el ID del miembro (4 dígitos): ");
+                    System.out.println("Ingrese el ID del miembro (formato XXXX): ");
                     idMiembro = scanner.nextInt();
                     scanner.nextLine();
                     System.out.println("Ingrese el ISBN del libro: ");
                     isbn = scanner.nextLine();
-                    // scanner.nextLine();
                     LocalDateTime fechaPrestamo = LocalDateTime.now(); // Registrar fecha de préstamo
 
                     Miembro miembro = buscarMiembroPorID(sucursales.get(0).getMiembros(), idMiembro);
@@ -120,6 +122,22 @@ public class Main {
                     } else {
                         System.out.println("Miembro o libro no encontrado.");
                     }
+
+                    // Guardar Miembro en el csv
+                    LocalDateTime fechaActual = LocalDateTime.now();
+
+                    String fechaP = fechaActual.format(formatter);
+
+                    // Fecha después de 30 días
+                    LocalDateTime nuevaFecha = fechaPrestamo.plusDays(30);
+
+                    String fechaD = nuevaFecha.format(formatter);
+
+                    // Fila del nuevo miembro
+                    String[] filaMiembro = { String.valueOf(idMiembro), miembro.getNombre(), fechaP, fechaD };
+
+                    escribirCsv(urlMiembrosCSV, filaMiembro);
+
                     break;
 
                 case 5:
@@ -199,6 +217,7 @@ public class Main {
         return filas;
     }
 
+    // Función para escribir los cambios en el csv de la base de datos
     private static void escribirCsv(String urlCSV, String[] fila) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(urlCSV, true))) {
             // Escribe los datos de la fila como un mismo String seaparado por comas
