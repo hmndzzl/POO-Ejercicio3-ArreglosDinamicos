@@ -173,6 +173,81 @@ public class Main {
                         System.out.println("El libro '" + libroEstadisticas.getTitulo() + "' ha sido prestado "
                                 + libroEstadisticas.getNPrestados() + " veces.");
                     }
+
+                    ArrayList<String[]> librosCSV = leerCsv(urlLibrosCSV);
+
+                    // Contadores de géneros
+                    int drama = 0;
+                    int ficcion = 0;
+                    int fantasia = 0;
+                    int suspenso = 0;
+                    int realismoMagico = 0;
+                    int romance = 0;
+                    int cienciaFiccion = 0;
+                    int distopia = 0;
+                    int aventura = 0;
+                    int clasico = 0;
+                    int misterio = 0;
+
+                    // Iterar por cada fila del CSV (saltando el encabezado si existe)
+                    for (int i = 1; i < librosCSV.size(); i++) {
+                        String Prestamogenero = librosCSV.get(i)[4];  // Columna de género
+                        int prestamos = Integer.parseInt(librosCSV.get(i)[5]);  // Columna de préstamos
+
+                        // Acumular préstamos según el género
+                        switch (Prestamogenero.toLowerCase()) {
+                            case "drama":
+                                drama += prestamos;
+                                break;
+                            case "ficcion":
+                                ficcion += prestamos;
+                                break;
+                            case "fantasia":
+                                fantasia += prestamos;
+                                break;
+                            case "suspenso":
+                                suspenso += prestamos;
+                                break;
+                            case "realismo magico":
+                                realismoMagico += prestamos;
+                                break;
+                            case "romance":
+                                romance += prestamos;
+                                break;
+                            case "ciencia ficcion":
+                                cienciaFiccion += prestamos;
+                                break;
+                            case "distopia":
+                                distopia += prestamos;
+                                break;
+                            case "aventura":
+                                aventura += prestamos;
+                                break;
+                            case "clasico":
+                                clasico += prestamos;
+                                break;
+                            case "misterio":
+                                misterio += prestamos;
+                                break;
+                            default:
+                                System.out.println("Género no reconocido: " + Prestamogenero);
+                        }
+                    }
+                
+                    // Mostrar los resultados
+                    System.out.println("Préstamos por género:");
+                    System.out.println("Drama: " + drama);
+                    System.out.println("Ficción: " + ficcion);
+                    System.out.println("Fantasía: " + fantasia);
+                    System.out.println("Suspenso: " + suspenso);
+                    System.out.println("Realismo Mágico: " + realismoMagico);
+                    System.out.println("Romance: " + romance);
+                    System.out.println("Ciencia Ficción: " + cienciaFiccion);
+                    System.out.println("Distopía: " + distopia);
+                    System.out.println("Aventura: " + aventura);
+                    System.out.println("Clásico: " + clasico);
+                    System.out.println("Misterio: " + misterio);
+                
                     break;
 
                 case 7:
