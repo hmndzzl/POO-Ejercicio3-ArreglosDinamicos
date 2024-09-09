@@ -2,12 +2,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Miembro {
+	// Atributos
     private int id;
     private String nombre;
     private ArrayList<Libro> libros;
     private LocalDateTime fechaP;
     private LocalDateTime fechaD;
 
+	// Constructor
     public Miembro(int id, String nombre, ArrayList<Libro> libros, LocalDateTime fecha) {
         this.id = id;
         this.nombre = nombre;
@@ -17,17 +19,29 @@ public class Miembro {
     }
 
     //Methods 
-    public void prestarLibro(Libro libro, LocalDateTime fechaP) {
-    
-    }
+	public boolean prestarLibro(Libro libro, LocalDateTime fechaP) {
+		// Verifica si el libro ya está en la lista de libros prestados por el miembro
+		if (!libros.contains(libro)) {
+			libros.add(libro);  // Añade el libro a la lista de libros prestados
+			this.fechaP = fechaP;  // Guarda la fecha de préstamo
+			return true;  // Retorna true si el préstamo fue exitoso
+		}
+		return false;  // Retorna false si el libro ya estaba prestado
+	}
+	
 
-    public void devolverLibro(Libro libro, LocalDateTime fechaD) {
-    
-    }
+	public boolean devolverLibro(Libro libro, LocalDateTime fechaD) {
+		// Verifica si el libro está en la lista de libros prestados
+		if (libros.contains(libro)) {
+			libros.remove(libro);  // Elimina el libro de la lista de libros prestados
+			this.fechaD = fechaD;  // Guarda la fecha de devolución
+			return true;  // Retorna true si la devolución fue exitosa
+		}
+		return false;  // Retorna false si el libro no estaba prestado
+	}
 
 
     //Setters & getters
-
     public int getId() {
 		return this.id;
 	}
